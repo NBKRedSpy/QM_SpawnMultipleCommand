@@ -1,0 +1,8 @@
+{
+    "UniqueModName": "nbk_redspy_QM_SpawnMultipleCommand",
+    "Assemblies": [
+        "QM_SpawnMultipleCommand.dll"
+    ],
+    "Dependencies": []
+}
+
