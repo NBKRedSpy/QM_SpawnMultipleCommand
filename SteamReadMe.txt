@@ -1,6 +1,16 @@
 [h1]Quasimorph Spawn Multiple Items Command[/h1]
 
 
+[h1]Important - This is only for the opt in beta version of the game![/h1]
+
+This is a temporary version that supports the 0.8.6 beta, and not the current game's version.
+The non beta version [i]must[/i] be uninstalled.
+When the 0.8.6 becomes the main version, this mod will be deleted.
+Note that the beta is expected to change many times before release.
+As such, this mod may break on each beta release.
+
+[h1]Docs[/h1]
+
 Executes the console's item command multiple times to drop more than one item.
 
 Ex:
@@ -18,3 +28,8 @@ Thanks!
 [h1]Source Code[/h1]
 
 Source code is available on GitHub at https://github.com/NBKRedSpy/QM_SpawnMultipleCommand
+
+[h2]1.1.0[/h2]
+[list]
+[*]Version 0.8.6 compatibility
+[/list]

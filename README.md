@@ -2,6 +2,16 @@
 
 ![thumbnail icon](media/thumbnail.png)
 
+# Important - This is only for the opt in beta version of the game!
+
+This is a temporary version that supports the 0.8.6 beta, and not the current game's version.
+The non beta version *must* be uninstalled.  
+When the 0.8.6 becomes the main version, this mod will be deleted.
+Note that the beta is expected to change many times before release.
+As such, this mod may break on each beta release.
+
+# Docs
+
 Executes the console's item command multiple times to drop more than one item.
 
 Ex:
@@ -17,3 +27,6 @@ Thanks!
 
 # Source Code
 Source code is available on GitHub at https://github.com/NBKRedSpy/QM_SpawnMultipleCommand
+
+## 1.1.0
+* Version 0.8.6 compatibility

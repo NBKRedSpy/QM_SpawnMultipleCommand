@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace QM_SpawnMultipleCommand
 {
+    [ConsoleCommand(new string[] { "itemx" })]
     public class ItemXCommand
     {
 
@@ -15,13 +16,11 @@ namespace QM_SpawnMultipleCommand
         /// </summary>
         private static bool ErrorHasBeenShown { get; set; } = false;
 
-        public static string CommandName { get; set; } = "itemx";
-
         private static ConsoleDaemon.CommandInterface SpawnItemCommand { get; set; }
 
         private static void Write(string text)
         {
-            DevConsoleUI.Instance.PrintText(text);
+            UI.Get<DevConsole>().PrintText(text);
         }
 
         public static string Help(string command, bool verbose)
@@ -114,9 +113,11 @@ namespace QM_SpawnMultipleCommand
 
         public static bool IsAvailable()
         {
+            DevConsole devConsole = UI.Get<DevConsole>();
+
             if (SpawnItemCommand == null)
             {
-                if (ConsoleDaemon.Instance.Commands.TryGetValue("item", out ConsoleDaemon.CommandInterface command))
+                if(devConsole.Daemon._commands.TryGetValue("item", out ConsoleDaemon.CommandInterface command))
                 {
                     SpawnItemCommand = command;
                 }
@@ -127,7 +128,7 @@ namespace QM_SpawnMultipleCommand
                 if (!ErrorHasBeenShown)
                 {
                     ErrorHasBeenShown = true;
-                    DevConsoleUI.Instance.PrintText("Unable to find the game's Item console command");
+                    devConsole.PrintText("Unable to find the game's Item console command");
                 }
                 return false;
             }
