@@ -17,3 +17,6 @@ Thanks!
 
 # Source Code
 Source code is available on GitHub at https://github.com/NBKRedSpy/QM_SpawnMultipleCommand
+
+## 1.1.0
+* Version 0.8.6 compatibility
