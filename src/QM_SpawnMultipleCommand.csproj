@@ -62,8 +62,15 @@
 
 	</PropertyGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="@echo off&#xD;&#xA;set deployDir=&quot;$(WorkshopPath)&quot;&#xD;&#xA;set deployDirNoQuote=$(WorkshopPath)&#xD;&#xA;&#xD;&#xA;xcopy /f /y &quot;../modmanifest.json&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;&#xD;&#xA;if '$(SteamId)'=='' (echo SteamId in project not set.  Aborting Workshop Deployment &amp;&amp; exit)&#xD;&#xA;echo deploying to %25deployDir%25&#xD;&#xA;&#xD;&#xA;mkdir &quot;$(WorkshopPath)&quot;&#xD;&#xA;&#xD;&#xA;xcopy /f /y &quot;$(ProjectDir)../media/thumbnail.png&quot; %25deployDir%25&#xD;&#xA;xcopy /f /y &quot;$(ProjectDir)../modmanifest.json&quot; %25deployDir%25&#xD;&#xA;xcopy /f /y   &quot;$(TargetDir)$(TargetName).*&quot; %25deployDir%25&#xD;&#xA;" />
+		<Exec Command="@echo off&#xD;&#xA;set deployDir=&quot;$(WorkshopPath)&quot;&#xD;&#xA;set deployDirNoQuote=$(WorkshopPath)&#xD;&#xA;&#xD;&#xA;xcopy /f /y &quot;../modmanifest.json&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;&#xD;&#xA;if '$(SteamId)'=='' (echo SteamId in project not set.  Aborting Workshop Deployment &amp;&amp; exit)&#xD;&#xA;echo deploying to %25deployDir%25&#xD;&#xA;&#xD;&#xA;mkdir &quot;$(WorkshopPath)&quot;&#xD;&#xA;&#xD;&#xA;xcopy /f /y &quot;$(ProjectDir)../media/thumbnail.png&quot; %25deployDir%25&#xD;&#xA;xcopy /f /y &quot;$(ProjectDir)../modmanifest.json&quot; %25deployDir%25&#xD;&#xA;xcopy /f /y   &quot;$(TargetDir)$(TargetName).*&quot; %25deployDir%25&#xD;&#xA;&#xD;&#xA;REM if '$(Configuration)'=='Release' (del &quot;$(WorkshopPath)\*.pdb&quot;)&#xD;&#xA;" />
 	</Target>
+	<Target Condition="'$(Configuration)'=='Release' and '$(SteamId)'!=''" Name="PostBuildPackagePdbRemove" AfterTargets="PostBuildEvent">
+		<ItemGroup>
+			<DeployPdbFiles Include="$(WorkshopPath)/*.pdb" />
+		</ItemGroup>
+		<Delete Files="@(DeployPdbFiles)" />
+	</Target>
+	
 	<Target Condition="'$(SteamId)'!=''" Name="PostBuildPackage" AfterTargets="PostBuildEvent">
 		<ItemGroup>
 			<WorkshopSourceFile Include="$(WorkshopPath)*.*" />

@@ -1,5 +1,6 @@
 ﻿using MGSC;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,9 +8,11 @@ using UnityEngine;
 
 namespace QM_SpawnMultipleCommand
 {
-    [ConsoleCommand(new string[] { "itemx" })]
+    [ConsoleCommand(new string[] { commandName })]
     public class ItemXCommand
     {
+
+        private const string commandName = "itemx";
 
         /// <summary>
         /// Used to only show the "cannot find game's item command" only once as to not spam it.
@@ -101,14 +104,34 @@ namespace QM_SpawnMultipleCommand
         }
 
         /// <summary>
-        /// Returns the list of projects in the file if the slot is saved and then tab is pressed.
+        /// Returns the list of items that partially match the text
         /// </summary>
         /// <param name="command"></param>
         /// <param name="tokens"></param>
         /// <returns></returns>
         public static List<string> FetchAutocompleteOptions(string command, string[] tokens)
         {
-            return SpawnItemCommand.FetchAutocompleteMethods(command, tokens.ToList());
+            if(tokens.Length == 0) return new List<string>();
+
+            string id = tokens[0].Trim();
+
+            //Todo:  Support localization item name search.
+            //  Probably show (foo) and have the command ignore the (foo) part.
+            //This is not currently supported by the game, so it is commented out.
+            ////Get the list of all the items in the localization that may match.
+            //List< KeyValuePair<string, string>> textMatches = 
+            //    Localization.Instance.currentDict
+            //    .Where(x =>
+            //        x.Key.IndexOf(id, StringComparison.OrdinalIgnoreCase) != -1 &&
+            //        x.Key.StartsWith("item.") && x.Key.EndsWith(".name"))
+            //    .ToList();
+
+            List<string> ids = Data.Items._records.Values
+                .Where(x => x.Id.IndexOf(id, StringComparison.OrdinalIgnoreCase) != -1)
+                .Select(x => $"{commandName} {x.Id}")
+                .ToList();
+
+            return ids;
         }
 
         public static bool IsAvailable()
