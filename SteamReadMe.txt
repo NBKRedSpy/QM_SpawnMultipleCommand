@@ -1,4 +1,4 @@
-[h1]Quasimorph Spawn Multiple Items Command[/h1]
+[h1]Item Command Extended[/h1]
 
 
 An extended version of the game's [i]item[/i] console command.
@@ -9,7 +9,7 @@ Usage:
 
 Will drop 10 water bottles.
 
-Note that this command will not stack items as it simply invokes the game's item command multiple times.  This is how the
+Note that this command will not stack items as it simply invokes the game's item command for actual item creation.
 
 [h1]Auto Complete[/h1]
 

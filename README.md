@@ -1,8 +1,8 @@
-# Quasimorph Spawn Multiple Items Command
+# Item Command Extended
 
 ![thumbnail icon](media/thumbnail.png)
 
-An extended version of the game's `item` console command.
+An extended version of the game's `item` console command. 
 It supports autocomplete and provides an error message when an ID is not valid.
 
 Usage:
@@ -10,7 +10,7 @@ Usage:
 
 Will drop 10 water bottles.
 
-Note that this command will not stack items as it simply invokes the game's item command multiple times.  This is how the 
+Note that this command will not stack items as it simply invokes the game's item command for actual item creation.
 
 # Auto Complete
 Type itemx, a partial id, and then hit tab.  All id matches will be returned.  The up and down arrow keys can be used to select a suggestion.
