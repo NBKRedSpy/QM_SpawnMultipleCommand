@@ -21,11 +21,6 @@ namespace QM_SpawnMultipleCommand
 
         private static ConsoleDaemon.CommandInterface SpawnItemCommand { get; set; }
 
-        private static void Write(string text)
-        {
-            UI.Get<DevConsole>().PrintText(text);
-        }
-
         public static string Help(string command, bool verbose)
         {
             //Console does not support multiple line output.  Workaround
@@ -39,68 +34,30 @@ namespace QM_SpawnMultipleCommand
         /// <returns></returns>
         public static string Execute(string[] tokens)
         {
+            //The game supports counts now.  The only purpose of this mod now is for autocomplete.
             try
             {
-                if (tokens.Length != 2)
-                {
-                    return $"Expected the number of items to drop";
+                string itemId = tokens.First();
+
+                if(string.IsNullOrEmpty(itemId)) {
+                    return "Please provide an Item ID";
                 }
 
-                //The count value.
-                if (!int.TryParse(tokens[1], out int count) || count <= 0)
-                {
-                    return $"The item count must be set and >= 0";
+                if(!ItemExists(itemId)) {
+                    return $"Item with ID '{itemId}' does not exist.";
                 }
 
-                List<string> tokenList = tokens.ToList();
-                tokenList.RemoveAt(tokenList.Count - 1);  //Remove the count
-
-                var messages = new Dictionary<string, int>();
-
-                try
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        string result = SpawnItemCommand.Execute(tokenList);
-
-                        //The command's expected result.  Currently the command throws an exception 
-                        //  and silently fails, but checking just in case it changes.
-                        if (result != "done!")
-                        {
-                            return ("$\"Error executing the item command. '{result}'");
-                        }
-
-                        //There should only be the "done!" message, but just in case.
-                        if (messages.TryGetValue(result, out int messageCount))
-                        {
-                            messages[result] = ++messageCount;
-                        }
-                        else
-                        {
-                            messages.Add(result, 1);
-                        }
-                    }
-
-                    foreach (string item in messages.Keys)
-                    {
-                        //Does not support multiple lines. Use the console directly.
-                        Write($"{item} ({messages[item]})");
-                        return "";
-                    }
-
-                    return "";
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError(ex);
-                    return $"Error executing the item command.  Verify the item id is correct. {ex.Message}";
-                }
+                return SpawnItemCommand.Execute(tokens.ToList());
             }
             catch (Exception ex)
             {
-                Debug.Log(ex);
-                return $"Command failed.  See Player.log for more information.  {ex.Message}";
+                return $"Error executing command.  Generally this is due to the item id not being correct.  Error: {ex.Message}";
             }
+        }
+
+        private static bool ItemExists(string itemId)
+        {
+            return Data.Items._records.Values.Any(x => x.Id.Equals(itemId, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -114,17 +71,6 @@ namespace QM_SpawnMultipleCommand
             if(tokens.Length == 0) return new List<string>();
 
             string id = tokens[0].Trim();
-
-            //Todo:  Support localization item name search.
-            //  Probably show (foo) and have the command ignore the (foo) part.
-            //This is not currently supported by the game, so it is commented out.
-            ////Get the list of all the items in the localization that may match.
-            //List< KeyValuePair<string, string>> textMatches = 
-            //    Localization.Instance.currentDict
-            //    .Where(x =>
-            //        x.Key.IndexOf(id, StringComparison.OrdinalIgnoreCase) != -1 &&
-            //        x.Key.StartsWith("item.") && x.Key.EndsWith(".name"))
-            //    .ToList();
 
             List<string> ids = Data.Items._records.Values
                 .Where(x => x.Id.IndexOf(id, StringComparison.OrdinalIgnoreCase) != -1)

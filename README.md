@@ -2,16 +2,18 @@
 
 ![thumbnail icon](media/thumbnail.png)
 
-Executes the console's item command multiple times to drop more than one item.
+An extended version of the game's `item` console command.
+It supports autocomplete and provides an error message when an ID is not valid.
 
-Ex:
+Usage:
 `itemx water 10`
 
 Will drop 10 water bottles.
 
-Note that this command will not stack items as it simply invokes the game's item command multiple times.
+Note that this command will not stack items as it simply invokes the game's item command multiple times.  This is how the 
 
-The command also has autocomplete.  Type itemx, a partial id, and then hit tab.  All id matches will be returned.  Press the up arrow key to select one of the options.
+# Auto Complete
+Type itemx, a partial id, and then hit tab.  All id matches will be returned.  The up and down arrow keys can be used to select a suggestion.
 
 # Support
 If you enjoy my mods and want to buy me a coffee, check out my [Ko-Fi](https://ko-fi.com/nbkredspy71915) page.
@@ -19,6 +21,10 @@ Thanks!
 
 # Source Code
 Source code is available on GitHub at https://github.com/NBKRedSpy/QM_SpawnMultipleCommand
+
+## 1.3.0
+* 0.9.9's `item` command now supports count.  Relaying to that.
+* Added Item ID check since the game's `item` command silently fails with a bad id.
 
 ## 1.2.0
 * Added auto complete.
