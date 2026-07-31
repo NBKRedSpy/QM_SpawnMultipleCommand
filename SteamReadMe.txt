@@ -1,6 +1,8 @@
 [h1]Item Command Extended[/h1]
 
 
+[b]WARNING[/b]: Using console commands will disable achievements.
+
 An extended version of the game's [i]item[/i] console command.
 It supports autocomplete and provides an error message when an ID is not valid.
 
